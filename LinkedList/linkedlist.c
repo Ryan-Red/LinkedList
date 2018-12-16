@@ -21,7 +21,6 @@ int addToHead(llnode **head, int val) {
 	return 0;
 }
 int addToTail(llnode **head, int val) {
-	llnode *newTail;
 	if (head == NULL) { return -1; }
 	if (*head == NULL) {
 		*head = (llnode *)malloc(sizeof(llnode));
@@ -50,14 +49,24 @@ int llprint(llnode *head) {
 		return (llprint(head->next));
 	}
 }
+int llfree(llnode *head) {
+	llnode *next = NULL;
+	if (head == NULL) { return -1; }
+	else {
+		head->next = next;
+		free(head);
+		return llfree(next);
+    }
+}
 int main(void) {
 	llnode* head = NULL;
 
 	addToTail(&head, 15);
 	addToHead(&head, 22);
-	printf("Value at the first node is of: %d\n", head->val);
-	printf("Tail value is of %d\n", (head->next)->val);
+
 	llprint(head);
+	llfree(head);
+
 	return 0;
 
 
