@@ -174,6 +174,7 @@ int main(void) {
 
 	llprint(head);
 
+	llfree(head);
 
 
 	return 0;
