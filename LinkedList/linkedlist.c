@@ -4,6 +4,14 @@
 int ll_add_to_head(llnode **head, int val) {
 	llnode *oldHead;
 	if (head == NULL) { return -1;}
+	if (*head == NULL) {
+		*head = (llnode *)malloc(sizeof(llnode));
+		(*head)->next = NULL;
+		(*head)->previous = NULL;
+		(*head)->val = val;
+		return 0;
+	}
+
 	oldHead = *head;
 	*head = (llnode *)malloc(sizeof(llnode));
 	(*head)->val = val;
@@ -93,19 +101,22 @@ int ll_del_by_val(llnode **head, int val) {
 
 int main(void) {
 	llnode* head = NULL;
+	int i = 0;
 
-	ll_add_to_tail(&head, 15);
-	ll_add_to_head(&head, 22);
-	ll_add_to_head(&head, 35);
-	ll_add_to_tail(&head, 44);
-
+	for (i = 0;i < 20;i++) {
+		if (i % 2 == 0) { ll_add_to_head(&head, i * 10); }
+		else { ll_add_to_tail(&head, i * 37); }
+	}
+	
 	printf("Current list:\n");
 	llprint(head);
+
 	ll_del_from_head(&head);
 	ll_del_from_tail(&head);
-
 	printf("Shortened List:\n");
 	llprint(head);
+
+
 
 	llfree(head);
 
