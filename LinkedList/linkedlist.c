@@ -87,16 +87,20 @@ int ll_find_by_val(llnode *head, int val) {
 	}
 }
 int ll_del_by_val(llnode **head, int val) {
+	llnode *node = NULL;
 	if (head == NULL) { return -1; }
 	
+	printf("Currently tested value is: %d\n", (*head)->val);
+
 	if ((*head)->val != val) {
 		if ((*head)->next != NULL) { return ll_del_by_val(&((*head)->next), val); }
 		else { return -1; }
 	}else{
 		if ((*head)->previous == NULL) { return ll_del_from_head(head); }
 		else {
-			((*head)->previous)->next = (*head)->next;
-			free(*head);
+			node = (*head);
+			*head = (*head)->next;
+			free(node);
 			return 0;
 		}
 	}
@@ -105,13 +109,15 @@ int ll_insert_in_order(llnode **head, int val) {
 	llnode *added = NULL;
 	if (head == NULL) { return -1; }
 
-	if ((*head)->val < val) {
-		if ((*head)->next != NULL) { return ll_insert_in_order(&((head*)->next), val); }
+	if ((*head)->val <= val) {
+		if ((*head)->next != NULL) { 
+			return ll_insert_in_order(&((*head)->next), val);
+		}
 		else {
 			return ll_add_to_tail(head, val);
 		}
 	}
-	else if ((*head)->val >= val) {
+	else {
 		if ((*head)->previous != NULL) {
 			added = (llnode *) malloc(sizeof(llnode));
 			added->val = val;
@@ -134,8 +140,7 @@ int main(void) {
 	int i,r = 0;
 
 	for (i = 0;i < 20;i++) {
-		if (i % 2 == 0) { ll_add_to_head(&head, i * 10); }
-		else { ll_add_to_tail(&head, i * 37); }
+		 ll_add_to_tail(&head, i * 37);
 	}
 	
 	printf("Current list:\n");
@@ -157,12 +162,19 @@ int main(void) {
 	if (r == 0) { printf("180 has been found and deleted.\n"); }
 	else if (r == -1) { printf("180 has not been found.\n"); }
 
+	printf("\n--------------------------------------------\n");
+	printf("Insert In order, 190:\n");
+	ll_insert_in_order(&head, 190);
+	printf("Insert In order, 10:\n");
+	ll_insert_in_order(&head, 10);
+	printf("Insert In order, 1900:\n");
+	ll_insert_in_order(&head, 1900);
+	printf("Insert In order, 666:\n");
+	ll_insert_in_order(&head, 666);
+
 	llprint(head);
 
 
-
-
-	llfree(head);
 
 	return 0;
 
