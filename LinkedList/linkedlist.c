@@ -32,8 +32,6 @@ int ll_add_to_tail(llnode **head, int val) {
 	else {
 		return ll_add_to_tail(&((*head)->next), val);
 	}
-
-
 }
 int llprint(llnode *head) {
 	if (head == NULL) { return 0; }
@@ -70,6 +68,15 @@ int ll_del_from_head(llnode **head) {
 	free(*head);
 	*head = next;
 	return 0;
+}
+int ll_find_by_val(llnode *head, int val) {
+	if (head == NULL) { return -1; }
+	if (head->val != val) {
+		if (head->next != NULL) { return ll_find_by_val(head->next, val); }
+		else { return -1; }
+	}else {
+		return 1;
+	}
 }
 
 int main(void) {
