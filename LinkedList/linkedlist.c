@@ -134,6 +134,18 @@ int ll_insert_in_order(llnode **head, int val) {
 		}
 	}
 }
+int ll_concat(llnode **strA, llnode **strB) {
+	if (strA == NULL) { return -1; }
+	if (strB == NULL) { return -1; }
+
+	if ((*strA)->next != NULL) {
+		return ll_concat(&((*strA)->next), strB);
+	}
+	else {
+		(*strA)->next = *strB;
+		return 0;
+	}
+}
 
 int main(void) {
 	llnode* head = NULL;
