@@ -78,6 +78,18 @@ int ll_find_by_val(llnode *head, int val) {
 		return 1;
 	}
 }
+int ll_del_by_val(llnode **head, int val) {
+	if (head == NULL) { return -1; }
+	
+	if ((*head)->val != val) {
+		if ((*head)->next != NULL) { return ll_del_by_val(&((*head)->next), val); }
+		else { return -1; }
+	}else{
+		((*head)->previous)->next = (*head)->next;
+		free(*head);
+		return 0;
+	}
+}
 
 int main(void) {
 	llnode* head = NULL;
