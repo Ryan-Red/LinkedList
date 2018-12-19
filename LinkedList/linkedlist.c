@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "ll.h"
 
-struct llnode {
-	struct llnode* next;
-	int val;
-	struct llnode* previous;
-};
-typedef struct llnode llnode;
 
 int ll_add_to_head(llnode **head, int val) {
 	llnode *oldHead;

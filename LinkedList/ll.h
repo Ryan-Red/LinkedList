@@ -6,6 +6,7 @@ struct llnode {
 	int val;
 	struct llnode* previous;
 };
+typedef struct llnode llnode;
 
 int ll_add_to_head(llnode **head, int val);
 int ll_add_to_tail(llnode **head, int val);
