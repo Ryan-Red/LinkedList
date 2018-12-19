@@ -4,6 +4,14 @@
 int ll_add_to_head(llnode **head, int val) {
 	llnode *oldHead;
 	if (head == NULL) { return -1;}
+	if (*head == NULL) {
+		*head = (llnode *)malloc(sizeof(llnode));
+		(*head)->next = NULL;
+		(*head)->previous = NULL;
+		(*head)->val = val;
+		return 0;
+	}
+
 	oldHead = *head;
 	*head = (llnode *)malloc(sizeof(llnode));
 	(*head)->val = val;
@@ -85,27 +93,47 @@ int ll_del_by_val(llnode **head, int val) {
 		if ((*head)->next != NULL) { return ll_del_by_val(&((*head)->next), val); }
 		else { return -1; }
 	}else{
-		((*head)->previous)->next = (*head)->next;
-		free(*head);
-		return 0;
+		if ((*head)->previous == NULL) { return ll_del_from_head(head); }
+		else {
+			((*head)->previous)->next = (*head)->next;
+			free(*head);
+			return 0;
+		}
 	}
 }
 
 int main(void) {
 	llnode* head = NULL;
+	int i,r = 0;
 
-	ll_add_to_tail(&head, 15);
-	ll_add_to_head(&head, 22);
-	ll_add_to_head(&head, 35);
-	ll_add_to_tail(&head, 44);
-
+	for (i = 0;i < 20;i++) {
+		if (i % 2 == 0) { ll_add_to_head(&head, i * 10); }
+		else { ll_add_to_tail(&head, i * 37); }
+	}
+	
 	printf("Current list:\n");
 	llprint(head);
+
 	ll_del_from_head(&head);
 	ll_del_from_tail(&head);
-
 	printf("Shortened List:\n");
 	llprint(head);
+
+	printf("Value of 180 is found: %d (expected -1)\n", ll_find_by_val(head, 180));
+	printf("Value of 629 is found: %d (expected 1)\n", ll_find_by_val(head, 629));
+
+	r = ll_del_by_val(&head, 629);
+	if (r == 0) { printf("629 has been found and deleted.\n"); }
+	else if (r == -1) { printf("629 has not been found.\n"); }
+	
+	r = ll_del_by_val(&head, 180);
+	if (r == 0) { printf("180 has been found and deleted.\n"); }
+	else if (r == -1) { printf("180 has not been found.\n"); }
+
+	llprint(head);
+
+
+
 
 	llfree(head);
 
