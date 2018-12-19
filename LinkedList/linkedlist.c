@@ -8,7 +8,7 @@ struct llnode {
 };
 typedef struct llnode llnode;
 
-int addToHead(llnode **head, int val) {
+int ll_add_to_head(llnode **head, int val) {
 	llnode *oldHead;
 	if (head == NULL) { return -1;}
 	oldHead = *head;
@@ -20,7 +20,7 @@ int addToHead(llnode **head, int val) {
 	
 	return 0;
 }
-int addToTail(llnode **head, int val) {
+int ll_add_to_tail(llnode **head, int val) {
 	if (head == NULL) { return -1; }
 	if (*head == NULL) {
 		*head = (llnode *)malloc(sizeof(llnode));
@@ -37,7 +37,7 @@ int addToTail(llnode **head, int val) {
 		return 0;
 	}
 	else {
-		return addToTail(&((*head)->next), val);
+		return ll_add_to_tail(&((*head)->next), val);
 	}
 
 
@@ -82,10 +82,10 @@ int ll_del_from_head(llnode **head) {
 int main(void) {
 	llnode* head = NULL;
 
-	addToTail(&head, 15);
-	addToHead(&head, 22);
-	addToHead(&head, 35);
-	addToTail(&head, 44);
+	ll_add_to_tail(&head, 15);
+	ll_add_to_head(&head, 22);
+	ll_add_to_head(&head, 35);
+	ll_add_to_tail(&head, 44);
 
 	printf("Current list:\n");
 	llprint(head);
