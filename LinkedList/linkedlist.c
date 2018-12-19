@@ -109,6 +109,10 @@ int ll_insert_in_order(llnode **head, int val) {
 	llnode *added = NULL;
 	if (head == NULL) { return -1; }
 
+	if (*head == NULL) {
+		return ll_add_to_head(head, val);
+	}
+
 	if ((*head)->val <= val) {
 		if ((*head)->next != NULL) { 
 			return ll_insert_in_order(&((*head)->next), val);
@@ -148,7 +152,8 @@ int ll_concat(llnode **strA, llnode **strB) {
 }
 
 int main(void) {
-	llnode* head = NULL;
+	llnode *head = NULL;
+	llnode *tail = NULL;
 	int i,r = 0;
 
 	for (i = 0;i < 20;i++) {
@@ -184,7 +189,23 @@ int main(void) {
 	printf("Insert In order, 666:\n");
 	ll_insert_in_order(&head, 666);
 
+	printf("\nAll of Head:\n");
 	llprint(head);
+
+	for (i = 0;i < 13;i++) {
+		ll_insert_in_order(&tail, 10 * i);
+	}
+
+	printf("\nAll of Tail:\n");
+	llprint(tail);
+
+	printf("\nConcatination:\n");
+	ll_concat(&head, &tail);
+
+	llprint(head);
+
+
+
 
 	llfree(head);
 
