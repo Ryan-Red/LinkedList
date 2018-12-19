@@ -93,15 +93,18 @@ int ll_del_by_val(llnode **head, int val) {
 		if ((*head)->next != NULL) { return ll_del_by_val(&((*head)->next), val); }
 		else { return -1; }
 	}else{
-		((*head)->previous)->next = (*head)->next;
-		free(*head);
-		return 0;
+		if ((*head)->previous == NULL) { return ll_del_from_head(head); }
+		else {
+			((*head)->previous)->next = (*head)->next;
+			free(*head);
+			return 0;
+		}
 	}
 }
 
 int main(void) {
 	llnode* head = NULL;
-	int i = 0;
+	int i,r = 0;
 
 	for (i = 0;i < 20;i++) {
 		if (i % 2 == 0) { ll_add_to_head(&head, i * 10); }
@@ -115,6 +118,20 @@ int main(void) {
 	ll_del_from_tail(&head);
 	printf("Shortened List:\n");
 	llprint(head);
+
+	printf("Value of 180 is found: %d (expected -1)\n", ll_find_by_val(head, 180));
+	printf("Value of 629 is found: %d (expected 1)\n", ll_find_by_val(head, 629));
+
+	r = ll_del_by_val(&head, 629);
+	if (r == 0) { printf("629 has been found and deleted.\n"); }
+	else if (r == -1) { printf("629 has not been found.\n"); }
+	
+	r = ll_del_by_val(&head, 180);
+	if (r == 0) { printf("180 has been found and deleted.\n"); }
+	else if (r == -1) { printf("180 has not been found.\n"); }
+
+	llprint(head);
+
 
 
 
