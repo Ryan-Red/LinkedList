@@ -19,3 +19,6 @@ int llfree(llnode *head);
 
 int ll_find_by_val(llnode *head, int val);
 int ll_del_by_val(llnode **head, int val);
+
+
+int ll_insert_in_order(llnode **head, int val);
