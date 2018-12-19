@@ -101,6 +101,33 @@ int ll_del_by_val(llnode **head, int val) {
 		}
 	}
 }
+int ll_insert_in_order(llnode **head, int val) {
+	llnode *added = NULL;
+	if (head == NULL) { return -1; }
+
+	if ((*head)->val < val) {
+		if ((*head)->next != NULL) { return ll_insert_in_order(&((head*)->next), val); }
+		else {
+			return ll_add_to_tail(head, val);
+		}
+	}
+	else if ((*head)->val >= val) {
+		if ((*head)->previous != NULL) {
+			added = (llnode *) malloc(sizeof(llnode));
+			added->val = val;
+			added->previous = (*head)->previous;
+			added->next = *head;
+
+			((*head)->previous)->next = added;
+			(*head)->previous = added;
+			return 0;
+
+		}
+		else {
+			return ll_add_to_head(head, val);
+		}
+	}
+}
 
 int main(void) {
 	llnode* head = NULL;
