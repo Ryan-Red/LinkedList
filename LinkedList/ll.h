@@ -16,3 +16,6 @@ int ll_del_from_tail(llnode **head);
 
 int llprint(llnode *head);
 int llfree(llnode *head);
+
+int ll_find_by_val(llnode *head, int val);
+int ll_del_by_val(llnode **head, int val);
