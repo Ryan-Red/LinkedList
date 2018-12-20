@@ -150,6 +150,36 @@ int ll_concat(llnode **strA, llnode **strB) {
 		return 0;
 	}
 }
+int ll_sort(llnode **head) {
+	int temp, temp2,swap = 0;
+	llnode *ptemp = NULL;
+
+	if (head == NULL) { return -1; }
+
+	while (1) {
+		swap = 0;
+		ptemp = (*head);
+
+		while (ptemp->next != NULL) {	
+
+			if (ptemp->val > (ptemp->next)->val) {
+				temp = ptemp->val;
+				temp2 = (ptemp->next)->val;
+
+				ptemp->val = temp2;
+				(ptemp->next)->val = temp;
+				swap = 1;	
+			}
+			ptemp = ptemp->next;
+		}
+			if (swap == 0) { return 0; }
+	
+		
+		
+	}
+	return 0;
+}
+
 
 int main(void) {
 	llnode *head = NULL;
@@ -204,6 +234,11 @@ int main(void) {
 
 	llprint(head);
 
+	printf("Sorting head:\n");
+	ll_add_to_head(&head, 44);
+
+	ll_sort(&head);
+	llprint(head);
 
 
 
