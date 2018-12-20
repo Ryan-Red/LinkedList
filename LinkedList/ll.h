@@ -24,3 +24,5 @@ int ll_del_by_val(llnode **head, int val);
 int ll_insert_in_order(llnode **head, int val);
 
 int ll_concat(llnode **strA, llnode **strB);
+
+int ll_sort(llnode **head);
