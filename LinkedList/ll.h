@@ -14,7 +14,9 @@ int ll_add_to_tail(llnode **head, int val);
 int ll_del_from_head(llnode **head);
 int ll_del_from_tail(llnode **head);
 
-int llprint(llnode *head);
+int ll_print(llnode *head);
+int ll_print_bw(llnode *head);
+
 int llfree(llnode *head);
 
 int ll_find_by_val(llnode *head, int val);
@@ -26,3 +28,5 @@ int ll_insert_in_order(llnode **head, int val);
 int ll_concat(llnode **strA, llnode **strB);
 
 int ll_sort(llnode **head);
+
+int ll_get_to_end(llnode **head);
