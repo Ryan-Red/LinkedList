@@ -41,12 +41,39 @@ int ll_add_to_tail(llnode **head, int val) {
 		return ll_add_to_tail(&((*head)->next), val);
 	}
 }
-int llprint(llnode *head) {
+int ll_print(llnode *head) {
 	if (head == NULL) { return 0; }
 	else {
 		printf("%d\n", head->val);
-		return (llprint(head->next));
+		return (ll_print(head->next));
 	}
+}
+int ll_print_bw(llnode *head) {
+	llnode *node = NULL;
+
+	node = head;
+	while (1) {
+		node = node->next;
+		if (node->next == NULL) { break; }
+
+	}
+	while(1){
+		printf("%d\n", node->val);
+		node = node->previous;
+		if (node == NULL) { break; }
+
+	}
+	return 0;
+}
+int ll_get_to_end(llnode **head) {
+	if (head == NULL) { return -1; }
+
+	if ((*head)->next != NULL) {
+		return ll_get_to_end(&((*head)->next));
+	}
+	printf("%d\n", (*head)->val);
+	return 0;
+
 }
 int llfree(llnode *head) {
 	llnode *next = NULL;
@@ -100,6 +127,7 @@ int ll_del_by_val(llnode **head, int val) {
 		else {
 			node = (*head);
 			*head = (*head)->next;
+			(*head)->previous = node->previous;
 			free(node);
 			return 0;
 		}
@@ -147,6 +175,7 @@ int ll_concat(llnode **strA, llnode **strB) {
 	}
 	else {
 		(*strA)->next = *strB;
+		(*strB)->previous = (*strA);
 		return 0;
 	}
 }
@@ -191,12 +220,12 @@ int main(void) {
 	}
 	
 	printf("Current list:\n");
-	llprint(head);
+	ll_print(head);
 
 	ll_del_from_head(&head);
 	ll_del_from_tail(&head);
 	printf("Shortened List:\n");
-	llprint(head);
+	ll_print(head);
 
 	printf("Value of 180 is found: %d (expected -1)\n", ll_find_by_val(head, 180));
 	printf("Value of 629 is found: %d (expected 1)\n", ll_find_by_val(head, 629));
@@ -220,25 +249,28 @@ int main(void) {
 	ll_insert_in_order(&head, 666);
 
 	printf("\nAll of Head:\n");
-	llprint(head);
+	ll_print(head);
 
 	for (i = 0;i < 13;i++) {
 		ll_insert_in_order(&tail, 10 * i);
 	}
 
 	printf("\nAll of Tail:\n");
-	llprint(tail);
+	ll_print(tail);
 
 	printf("\nConcatination:\n");
 	ll_concat(&head, &tail);
 
-	llprint(head);
+	ll_print(head);
 
 	printf("Sorting head:\n");
 	ll_add_to_head(&head, 44);
 
 	ll_sort(&head);
-	llprint(head);
+	ll_print(head);
+
+	printf("Sorted List Backwards:\n");
+	ll_print_bw(head);
 
 
 
